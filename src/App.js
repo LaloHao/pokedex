@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image } from 'react-native';
+
+import { Input } from 'components';
 import { LogoPokemon } from 'assets/Images';
 
 const instructions = Platform.select({
@@ -11,9 +13,26 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: '',
+    };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(value) {
+    this.setState({ value });
+  }
+
   render() {
+    const { value } = this.state;
+
     return (
       <View style={styles.container}>
+        <Input value={value} onChangeText={this.onChange} />
         <Image source={LogoPokemon} style={styles.logo} />
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
