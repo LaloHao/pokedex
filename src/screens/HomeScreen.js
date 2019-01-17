@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, Button } from 'react-native';
 
-import { Input, Header } from 'components';
+import { withHeader } from 'compose';
+import { Input } from 'components';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class HomeScreen extends React.Component {
 
     return (
       <View>
-        <Header />
         <Input value={value} onChangeText={this.onChange} />
         <Text>
           Home
@@ -37,4 +37,4 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default HomeScreen;
+export default withHeader(HomeScreen);
