@@ -1,5 +1,5 @@
-type Input {
+type Input = {
   value: String,
 };
 
-export type Input;
+export default Input;
