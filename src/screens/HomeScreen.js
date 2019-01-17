@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Button } from 'react-native';
 
-import { Input } from 'components';
-import { LogoPokemon } from 'assets/Images';
+import { Input, Header } from 'components';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -24,14 +23,15 @@ class HomeScreen extends React.Component {
 
     return (
       <View>
-        <Image source={LogoPokemon} style={{
-          width: 189,
-          height: 70,
-        }} />
+        <Header />
         <Input value={value} onChangeText={this.onChange} />
         <Text>
           Home
         </Text>
+        <Button
+          title="Press"
+          onPress={() => this.props.navigation.push('Detail')}
+        />
       </View>
     );
   }
