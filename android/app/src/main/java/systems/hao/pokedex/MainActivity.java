@@ -1,4 +1,4 @@
-package com.pokedex;
+package systems.hao.pokedex;
 
 import com.facebook.react.ReactActivity;
 
