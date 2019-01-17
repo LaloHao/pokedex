@@ -2,12 +2,16 @@ import React from 'react';
 import { View } from 'react-native';
 import { Header } from 'components';
 
-const withHeader = (Component) => (props) => (
+type Props = {
+  navigation: {
+    push: Function,
+  },
+};
+
+// eslint-disable-next-line react/display-name
+const withHeader = Component => (props: Props) => (
   <View>
-    <Header
-      navigation={props.navigation}
-      screenProps={props.screenProps}
-    />
+    <Header navigation={props.navigation} />
     <Component {...props} />
   </View>
 );

@@ -1,10 +1,20 @@
 import React from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+} from 'react-native';
 
 import { withHeader } from 'compose';
 import { Input } from 'components';
 
-class HomeScreen extends React.Component {
+type Props = {
+  navigation: {
+    push: Function,
+  };
+};
+
+class HomeScreen extends React.Component<Props> {
   constructor(props) {
     super(props);
 
