@@ -36,7 +36,7 @@ const BackButton = styled.TouchableOpacity`
 `;
 
 const Header = ({ navigation: { state: { routeName }, goBack } }: Props) => (
-  <Container>
+  <Container testID="header">
     <StatusBar backgroundColor={Colors.Red} barStyle="light-content" />
     <Image source={Images.LogoPokemon} />
     { routeName !== 'Home' && (
