@@ -1,2 +1,5 @@
+// @flow
 /* eslint-disable import/prefer-default-export */
-export { default as Input } from './Input';
+export * from './Input';
+export * from './Navigation';
+export * from './Header';

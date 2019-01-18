@@ -1,4 +1,4 @@
-import LogoPokemon from './logo-pokemon.png'
+import LogoPokemon from './logo-pokemon.png';
 
 const Images = {
   LogoPokemon,

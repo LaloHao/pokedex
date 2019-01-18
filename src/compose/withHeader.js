@@ -1,15 +1,13 @@
+// @flow
 import React from 'react';
 import { View } from 'react-native';
 import { Header } from 'components';
 
-type Props = {
-  navigation: {
-    push: Function,
-  },
-};
+import type { ComponentType } from 'react';
+import type { Header as Props } from 'types';
 
 // eslint-disable-next-line react/display-name
-const withHeader = Component => (props: Props) => (
+const withHeader = (Component: ComponentType<Props>) => (props: Props) => (
   <View>
     <Header navigation={props.navigation} />
     <Component {...props} />

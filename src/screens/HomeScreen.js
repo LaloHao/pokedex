@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import {
   View,
@@ -8,24 +9,22 @@ import {
 import { withHeader } from 'compose';
 import { Input } from 'components';
 
+import type { Navigation } from 'types';
+
 type Props = {
-  navigation: {
-    push: Function,
-  };
+  navigation: Navigation;
 };
 
-class HomeScreen extends React.Component<Props> {
-  constructor(props) {
-    super(props);
+type State = {
+  value: string,
+};
 
-    this.state = {
-      value: '',
-    };
+class HomeScreen extends React.Component<Props, State> {
+  state = {
+    value: '',
+  };
 
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(value) {
+  onChange = (value) => {
     this.setState({ value });
   }
 

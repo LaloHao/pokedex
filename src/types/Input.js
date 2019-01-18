@@ -1,5 +1,4 @@
-type Input = {
-  value: String,
+// @flow
+export type Input = {
+  value: string,
 };
-
-export default Input;
