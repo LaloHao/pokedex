@@ -1,9 +1,10 @@
 // @flow
 import React from 'react';
-import { Image, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import type { Card as Props } from 'types';
 import { withNavigation } from 'react-navigation';
+import { CachedImage as Image } from 'react-native-cached-image';
 
 import { Colors } from 'assets';
 
