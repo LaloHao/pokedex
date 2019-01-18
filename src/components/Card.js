@@ -20,7 +20,7 @@ const Container = styled.TouchableOpacity`
   align-items: center;
   width; ${cardSize}px;
   height; ${cardSize}px;
-  margin: ${() => cardSize() * 0.06}px;
+  margin: 5px 0;
 `;
 
 const Text = styled.Text`

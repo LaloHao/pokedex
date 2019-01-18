@@ -19,6 +19,7 @@ type State = {
 const List = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-around;
 `;
 
 const pokemons = [
