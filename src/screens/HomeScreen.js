@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { withHeader } from 'compose';
-import { Input } from 'components';
+import { SearchBox } from 'components';
 
 import type { Navigation } from 'types';
 
@@ -16,24 +16,18 @@ type Props = {
 };
 
 type State = {
-  value: string,
+
 };
 
 class HomeScreen extends React.Component<Props, State> {
-  state = {
-    value: '',
-  };
-
-  onChange = (value) => {
-    this.setState({ value });
+  onSearch = (value: string) => {
+    console.log(value);
   }
 
   render() {
-    const { value } = this.state;
-
     return (
       <View>
-        <Input value={value} onChangeText={this.onChange} />
+        <SearchBox onSearch={this.onSearch} />
         <Text>
           Home
         </Text>
