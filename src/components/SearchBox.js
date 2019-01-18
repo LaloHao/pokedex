@@ -19,6 +19,7 @@ const device = Platform.OS;
 if (device !== 'ios') {
   const { UIManager } = NativeModules;
 
+  // eslint-disable-next-line
   UIManager.setLayoutAnimationEnabledExperimental &&
     UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -53,7 +54,7 @@ const Text = styled.Text`
 
 type State = {
   value: string,
-  focused: Boolean,
+  focused: boolean,
 };
 
 class SearchBox extends React.Component<Props, State> {
