@@ -3,3 +3,4 @@
 export * from './SearchBox';
 export * from './Navigation';
 export * from './Header';
+export * from './Card';

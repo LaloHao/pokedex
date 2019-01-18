@@ -1,13 +1,10 @@
 // @flow
 import React from 'react';
-import {
-  View,
-  Text,
-  Button,
-} from 'react-native';
+import styled from 'styled-components/native';
+import { View } from 'react-native';
 
 import { withHeader } from 'compose';
-import { SearchBox } from 'components';
+import { SearchBox, Card } from 'components';
 
 import type { Navigation } from 'types';
 
@@ -19,22 +16,65 @@ type State = {
 
 };
 
+const List = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+const pokemons = [
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png',
+  },
+  {
+    name: 'Bulbasaur',
+    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png',
+  },
+];
+
 class HomeScreen extends React.Component<Props, State> {
+  // eslint-disable-next-line
   onSearch = (value: string) => {
-    console.log(value);
+    // console.log(value);
   }
 
   render() {
     return (
       <View>
         <SearchBox onSearch={this.onSearch} />
-        <Text>
-          Home
-        </Text>
-        <Button
-          title="Press"
-          onPress={() => this.props.navigation.push('Detail')}
-        />
+        <List>
+          {pokemons.map(pokemon => (
+            <Card key={pokemon.name} name={pokemon.name} uri={pokemon.uri} />
+          ))}
+        </List>
       </View>
     );
   }
