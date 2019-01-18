@@ -1,8 +1,9 @@
+// @flow
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 
 import styled from 'styled-components/native';
-import type { Input as type } from 'types';
+import type { Input as Props } from 'types';
 
 import { Colors } from 'assets';
 
@@ -12,7 +13,7 @@ const Container = styled.View`
   padding: 15px;
 `;
 
-const Input = (props) => (
+const Input = (props: Props) => (
   <Container>
     <TextInput {...props} />
   </Container>

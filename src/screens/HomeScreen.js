@@ -1,21 +1,30 @@
+// @flow
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+} from 'react-native';
 
+import { withHeader } from 'compose';
 import { Input } from 'components';
-import { LogoPokemon } from 'assets/Images';
 
-class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props);
+import type { Navigation } from 'types';
 
-    this.state = {
-      value: '',
-    };
+type Props = {
+  navigation: Navigation;
+};
 
-    this.onChange = this.onChange.bind(this);
-  }
+type State = {
+  value: string,
+};
 
-  onChange(value) {
+class HomeScreen extends React.Component<Props, State> {
+  state = {
+    value: '',
+  };
+
+  onChange = (value) => {
     this.setState({ value });
   }
 
@@ -24,17 +33,17 @@ class HomeScreen extends React.Component {
 
     return (
       <View>
-        <Image source={LogoPokemon} style={{
-          width: 189,
-          height: 70,
-        }} />
         <Input value={value} onChangeText={this.onChange} />
         <Text>
           Home
         </Text>
+        <Button
+          title="Press"
+          onPress={() => this.props.navigation.push('Detail')}
+        />
       </View>
     );
   }
 }
 
-export default HomeScreen;
+export default withHeader(HomeScreen);
