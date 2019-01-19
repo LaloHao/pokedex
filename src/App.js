@@ -9,7 +9,7 @@ const App = createStackNavigator({
   Home: HomeScreen,
   Detail: DetailScreen,
 }, {
-  initialouteName: 'Home',
+  initialRouteName: 'Detail',
   defaultNavigationOptions: {
     header: () => null,
   },
