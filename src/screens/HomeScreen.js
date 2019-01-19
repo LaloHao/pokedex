@@ -6,10 +6,15 @@ import { View } from 'react-native';
 import { withHeader } from 'compose';
 import { SearchBox, Card } from 'components';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchPokemons } from 'store/actions';
+
 import type { Navigation } from 'types';
 
 type Props = {
   navigation: Navigation;
+  fetchPokemons: Function,
 };
 
 type State = {
@@ -62,6 +67,11 @@ const pokemons = [
 ];
 
 class HomeScreen extends React.Component<Props, State> {
+  constructor(props) {
+    super(props);
+    this.props.fetchPokemons();
+  }
+
   // eslint-disable-next-line
   onSearch = (value: string) => {
     // console.log(value);
@@ -81,4 +91,10 @@ class HomeScreen extends React.Component<Props, State> {
   }
 }
 
-export default withHeader(HomeScreen);
+const mapStateToProps = state => ({ ...state });
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchPokemons,
+}, dispatch);
+
+export default withHeader(connect(mapStateToProps, mapDispatchToProps)(HomeScreen));
