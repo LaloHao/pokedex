@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import type { Node } from 'react';
+import { ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { Colors } from 'assets';
 import { CachedImage as Image } from 'react-native-cached-image';
@@ -20,7 +21,7 @@ const Container = styled.View`
   align-items: center;
   width: 90%;
   align-self: center;
-  margin-top: 15px;
+  margin: 15px 0;
 `;
 
 const AttributesContainer = styled.View`
@@ -123,34 +124,36 @@ class DetailScreen extends React.Component<Props> {
     const { name } = this.props.navigation.state.params;
     const pokemon = this.props.Pokemon.pokemons.find(p => p.name === name);
     return (
-      <Container>
-        <AttributesContainer>
-          <Image
-            source={{ uri: pokemon.uri }}
-            style={{
-              width: 110,
-              height: 110,
-            }}
-          />
-          <Attributes>
-            <Id>#{pokemon.id}</Id>
-            <Name>{pokemon.name}</Name>
-            <Attribute attribute="Height" value={`${pokemon.height || 0}m`} />
-            <Attribute attribute="Weight" value={`${pokemon.weight || 0}kg`} />
-          </Attributes>
-        </AttributesContainer>
-        <Text>
-          {pokemon.description}
-        </Text>
-        <Statistics>
-          <Statistic name="HP" value={pokemon.hp} />
-          <Statistic name="Attack" value={pokemon.attack} />
-          <Statistic name="Defense" value={pokemon.defense} />
-          <Statistic name="Speed" value={pokemon.speed} />
-          <Statistic name="Sp Atk" value={pokemon['special-attack']} />
-          <Statistic name="Sp Def" value={pokemon['special-defense']} />
-        </Statistics>
-      </Container>
+      <ScrollView>
+        <Container>
+          <AttributesContainer>
+            <Image
+              source={{ uri: pokemon.uri }}
+              style={{
+                width: 110,
+                height: 110,
+              }}
+            />
+            <Attributes>
+              <Id>#{pokemon.id}</Id>
+              <Name>{pokemon.name}</Name>
+              <Attribute attribute="Height" value={`${pokemon.height || 0}m`} />
+              <Attribute attribute="Weight" value={`${pokemon.weight || 0}kg`} />
+            </Attributes>
+          </AttributesContainer>
+          <Text>
+            {pokemon.description}
+          </Text>
+          <Statistics>
+            <Statistic name="HP" value={pokemon.hp} />
+            <Statistic name="Attack" value={pokemon.attack} />
+            <Statistic name="Defense" value={pokemon.defense} />
+            <Statistic name="Speed" value={pokemon.speed} />
+            <Statistic name="Sp Atk" value={pokemon['special-attack']} />
+            <Statistic name="Sp Def" value={pokemon['special-defense']} />
+          </Statistics>
+        </Container>
+      </ScrollView>
     );
   }
 }
