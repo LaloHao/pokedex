@@ -33,7 +33,7 @@ class Card extends React.Component<Props> {
     const imageSize = cardSize() * 0.8;
     const style = { width: imageSize, height: imageSize };
     return (
-      <Container onPress={() => this.props.navigation.push('Detail')}>
+      <Container onPress={() => this.props.navigation.push('Detail', { name })}>
         <Image source={{ uri }} style={style} />
         <Text>
           {name}

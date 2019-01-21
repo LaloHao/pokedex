@@ -2,6 +2,7 @@ import {
   FETCH_POKEMONS,
   FETCH_POKEMONS_SUCCESS,
   FETCH_POKEMONS_FAILURE,
+  FETCH_POKEMON_SUCCESS,
 } from 'store/actions';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
 };
 
 const PokemonReducer = (state = initialState, action) => {
+  let pokemons = [];
   switch (action.type) {
     case FETCH_POKEMONS:
       return { ...state, isLoading: true };
@@ -26,6 +28,24 @@ const PokemonReducer = (state = initialState, action) => {
           ...pokemon,
           uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
         })),
+        isLoading: false,
+      };
+    case FETCH_POKEMON_SUCCESS:
+      // eslint-disable-next-line
+      action.payload.stats.forEach(stat => stats[stat.stat.name] = stat.base_stat);
+      pokemons = state.pokemons.map((pokemon) => {
+        if (pokemon.name === action.payload.name) {
+          return {
+            ...pokemon,
+            weight: action.payload.weight,
+            height: action.payload.height,
+          };
+        }
+        return pokemon;
+      });
+      return {
+        ...state,
+        pokemons,
         isLoading: false,
       };
     default:

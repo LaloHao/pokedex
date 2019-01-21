@@ -7,6 +7,12 @@ import { CachedImage as Image } from 'react-native-cached-image';
 import { withHeader } from 'compose';
 import { Statistic } from 'components';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchPokemon } from 'store/actions';
+
+import type { Navigation } from 'types';
+
 const Container = styled.View`
   background-color: ${Colors.White};
   padding: 10px;
@@ -88,37 +94,71 @@ const Statistics = ({ children }: { children: Node }) => (
   </StatisticsContainer>
 );
 
-const uri = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png';
+type Props = {
+  fetchPokemon: Function,
+  navigation: Navigation,
+  Pokemon: {
+    pokemons: Array<{
+      name: string,
+      uri: string,
+      height: string,
+      weight: string,
+      hp: string,
+      attack: string,
+      defense: string,
+      speed: string,
+      'special-attack': string,
+      'special-defense': string,
+    }>,
+  }
+};
 
-const DetailScreen = () => (
-  <Container>
-    <AttributesContainer>
-      <Image
-        source={{ uri }}
-        style={{
-          width: 110,
-          height: 110,
-        }}
-      />
-      <Attributes>
-        <Id>#001</Id>
-        <Name>Bulbasaur</Name>
-        <Attribute attribute="Height" value="0.7m" />
-        <Attribute attribute="Weight" value="6.9kg" />
-      </Attributes>
-    </AttributesContainer>
-    <Text>
-      For some time after its birth, it grows by gaining nourishment from the see on its back.
-    </Text>
-    <Statistics>
-      <Statistic name="HP" value={45} />
-      <Statistic name="Attack" value={49} />
-      <Statistic name="Defense" value={49} />
-      <Statistic name="Speed" value={45} />
-      <Statistic name="Sp Atk" value={65} />
-      <Statistic name="Sp Def" value={65} />
-    </Statistics>
-  </Container>
-);
+class DetailScreen extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+    this.props.fetchPokemon(this.props.navigation.state.params.name);
+  }
 
-export default withHeader(DetailScreen);
+  render() {
+    const { name } = this.props.navigation.state.params;
+    const pokemon = this.props.Pokemon.pokemons.find(p => p.name === name);
+    return (
+      <Container>
+        <AttributesContainer>
+          <Image
+            source={{ uri: pokemon.uri }}
+            style={{
+              width: 110,
+              height: 110,
+            }}
+          />
+          <Attributes>
+            <Id>#001</Id>
+            <Name>Bulbasaur</Name>
+            <Attribute attribute="Height" value={`${pokemon.height || 0}m`} />
+            <Attribute attribute="Weight" value={`${pokemon.weight || 0}kg`} />
+          </Attributes>
+        </AttributesContainer>
+        <Text>
+          For some time after its birth, it grows by gaining nourishment from the see on its back.
+        </Text>
+        <Statistics>
+          <Statistic name="HP" value={pokemon.hp} />
+          <Statistic name="Attack" value={pokemon.attack} />
+          <Statistic name="Defense" value={pokemon.defense} />
+          <Statistic name="Speed" value={pokemon.speed} />
+          <Statistic name="Sp Atk" value={pokemon['special-attack']} />
+          <Statistic name="Sp Def" value={pokemon['special-defense']} />
+        </Statistics>
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = state => ({ ...state });
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchPokemon,
+}, dispatch);
+
+export default withHeader(connect(mapStateToProps, mapDispatchToProps)(DetailScreen));

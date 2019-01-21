@@ -9,6 +9,9 @@ import {
   FETCH_POKEMONS,
   fetchPokemonsFailure,
   fetchPokemonsSuccess,
+  FETCH_POKEMON,
+  fetchPokemonFailure,
+  fetchPokemonSuccess,
 } from 'store/actions';
 
 const API = 'https://pokeapi.co/api/v2';
@@ -24,3 +27,14 @@ export const fetchPokemons = action$ => action$
   })
   .map(pokemons => fetchPokemonsSuccess(pokemons))
   .catch(error => Observable.of(fetchPokemonsFailure(error.message)));
+
+// eslint-disable-next-line
+export const fetchPokemon = action$ => action$
+  .ofType(FETCH_POKEMON)
+// eslint-disable-next-line
+  .switchMap((action) => {
+    return ajax
+      .getJSON(`${API}/pokemon/${action.pokemon}`);
+  })
+  .map(pokemons => fetchPokemonSuccess(pokemons))
+  .catch(error => Observable.of(fetchPokemonFailure(error.message)));
