@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
-import styled from 'styled-components/native';
-import { View } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 
 import { withHeader } from 'compose';
 import { SearchBox, Card } from 'components';
@@ -15,56 +14,24 @@ import type { Navigation } from 'types';
 type Props = {
   navigation: Navigation;
   fetchPokemons: Function,
+  Pokemon: {
+    pokemons: Array<{ name: string }>,
+  },
 };
 
 type State = {
 
 };
 
-const List = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
-
-const pokemons = [
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
+const styles = StyleSheet.create({
+  list: {
+    marginHorizontal: 10,
+    marginVertical: 5,
   },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png',
+  column: {
+    justifyContent: 'space-between',
   },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png',
-  },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
-  },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png',
-  },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
-  },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png',
-  },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png',
-  },
-  {
-    name: 'Bulbasaur',
-    uri: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png',
-  },
-];
+});
 
 class HomeScreen extends React.Component<Props, State> {
   constructor(props) {
@@ -77,15 +44,28 @@ class HomeScreen extends React.Component<Props, State> {
     // console.log(value);
   }
 
+  renderPokemon = ({ item: pokemon }) => {
+    const { pokemons } = this.props.Pokemon;
+    const id = pokemons.findIndex(p => p.name === pokemon.name) + 1;
+    const uri = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+    return (
+      <Card name={pokemon.name} uri={uri} />
+    );
+  };
+
   render() {
+    const { pokemons } = this.props.Pokemon;
     return (
       <View>
         <SearchBox onSearch={this.onSearch} />
-        <List>
-          {pokemons.map(pokemon => (
-            <Card key={pokemon.name} name={pokemon.name} uri={pokemon.uri} />
-          ))}
-        </List>
+        <FlatList
+          contentContainerStyle={styles.list}
+          columnWrapperStyle={styles.column}
+          data={pokemons}
+          renderItem={this.renderPokemon}
+          numColumns={3}
+          keyExtractor={pokemon => pokemon.name}
+        />
       </View>
     );
   }
