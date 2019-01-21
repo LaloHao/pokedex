@@ -133,14 +133,14 @@ class DetailScreen extends React.Component<Props> {
             }}
           />
           <Attributes>
-            <Id>#001</Id>
-            <Name>Bulbasaur</Name>
+            <Id>#{pokemon.id}</Id>
+            <Name>{pokemon.name}</Name>
             <Attribute attribute="Height" value={`${pokemon.height || 0}m`} />
             <Attribute attribute="Weight" value={`${pokemon.weight || 0}kg`} />
           </Attributes>
         </AttributesContainer>
         <Text>
-          For some time after its birth, it grows by gaining nourishment from the see on its back.
+          {pokemon.description}
         </Text>
         <Statistics>
           <Statistic name="HP" value={pokemon.hp} />

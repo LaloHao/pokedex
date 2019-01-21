@@ -11,8 +11,11 @@ const initialState = {
   error: null,
 };
 
+const IMG_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+
 const PokemonReducer = (state = initialState, action) => {
   let pokemons = [];
+  const stats = {};
   switch (action.type) {
     case FETCH_POKEMONS:
       return { ...state, isLoading: true };
@@ -26,7 +29,8 @@ const PokemonReducer = (state = initialState, action) => {
         ...state,
         pokemons: action.payload.map((pokemon, index) => ({
           ...pokemon,
-          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+          id: index + 1,
+          uri: `${IMG_URL}/${index + 1}.png`,
         })),
         isLoading: false,
       };
@@ -37,8 +41,10 @@ const PokemonReducer = (state = initialState, action) => {
         if (pokemon.name === action.payload.name) {
           return {
             ...pokemon,
+            ...stats,
             weight: action.payload.weight,
             height: action.payload.height,
+            description: action.payload.description,
           };
         }
         return pokemon;

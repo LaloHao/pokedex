@@ -24,6 +24,7 @@ type Props = {
 
 type State = {
   page: number,
+  search: string,
 };
 
 const styles = StyleSheet.create({
@@ -39,8 +40,14 @@ const styles = StyleSheet.create({
 class HomeScreen extends React.Component<Props, State> {
   constructor(props) {
     super(props);
+    this.state = {
+      page: 1,
+      search: '',
+    };
+  }
+
+  componentDidMount() {
     this.fetchPokemons();
-    this.state = { page: 1 };
   }
 
   fetchPokemons = () => {
@@ -49,17 +56,20 @@ class HomeScreen extends React.Component<Props, State> {
   }
 
   onEndReached = throttle(() => {
-    const { pokemons } = this.props.Pokemon;
-    const { page } = this.state;
+    let { pokemons } = this.props.Pokemon;
+    const { page, search } = this.state;
+    if (search !== '') {
+      // eslint-disable-next-line
+      pokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.id == search);
+    }
     const pages = Math.ceil(pokemons.length / 50);
     if (page < pages) {
       this.setState({ page: page + 1 });
     }
   }, 500, { leading: false, trailing: true });
 
-  // eslint-disable-next-line
-  onSearch = (value: string) => {
-    // console.log(value);
+  onSearch = (search: string) => {
+    this.setState({ search });
   }
 
   renderPokemon = ({ item: pokemon }) => (
@@ -67,8 +77,13 @@ class HomeScreen extends React.Component<Props, State> {
   );
 
   render() {
-    const { pokemons, isLoading } = this.props.Pokemon;
-    const { page } = this.state;
+    const { isLoading } = this.props.Pokemon;
+    let { pokemons } = this.props.Pokemon;
+    const { page, search } = this.state;
+    if (search !== '') {
+      // eslint-disable-next-line
+      pokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.id == search);
+    }
     return (
       <View style={{ flex: 1 }}>
         <SearchBox onSearch={this.onSearch} />
