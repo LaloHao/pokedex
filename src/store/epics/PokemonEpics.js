@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -33,8 +33,10 @@ export const fetchPokemon = action$ => action$
   .ofType(FETCH_POKEMON)
 // eslint-disable-next-line
   .switchMap((action) => {
-    return ajax
-      .getJSON(`${API}/pokemon/${action.pokemon}`);
+    return forkJoin(
+      ajax.getJSON(`${API}/pokemon/${action.pokemon}`),
+      ajax.getJSON(`${API}/pokemon-species/${action.pokemon}`),
+    );
   })
   .map(pokemons => fetchPokemonSuccess(pokemons))
   .catch(error => Observable.of(fetchPokemonFailure(error.message)));

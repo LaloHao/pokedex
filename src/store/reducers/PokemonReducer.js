@@ -15,6 +15,8 @@ const IMG_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprite
 
 const PokemonReducer = (state = initialState, action) => {
   let pokemons = [];
+  let pokemon;
+  let species;
   const stats = {};
   switch (action.type) {
     case FETCH_POKEMONS:
@@ -27,27 +29,28 @@ const PokemonReducer = (state = initialState, action) => {
     case FETCH_POKEMONS_SUCCESS:
       return {
         ...state,
-        pokemons: action.payload.map((pokemon, index) => ({
-          ...pokemon,
+        pokemons: action.payload.map((_pokemon, index) => ({
+          ..._pokemon,
           id: index + 1,
           uri: `${IMG_URL}/${index + 1}.png`,
         })),
         isLoading: false,
       };
     case FETCH_POKEMON_SUCCESS:
+      [pokemon, species] = action.payload;
       // eslint-disable-next-line
-      action.payload.stats.forEach(stat => stats[stat.stat.name] = stat.base_stat);
-      pokemons = state.pokemons.map((pokemon) => {
-        if (pokemon.name === action.payload.name) {
+      pokemon.stats.forEach(stat => stats[stat.stat.name] = stat.base_stat);
+      pokemons = state.pokemons.map((_pokemon) => {
+        if (_pokemon.name === pokemon.name) {
           return {
-            ...pokemon,
+            ..._pokemon,
             ...stats,
-            weight: action.payload.weight,
-            height: action.payload.height,
-            description: action.payload.description,
+            weight: pokemon.weight,
+            height: pokemon.height,
+            description: species.flavor_text_entries.find(s => s.language.name === 'en').flavor_text,
           };
         }
-        return pokemon;
+        return _pokemon;
       });
       return {
         ...state,
