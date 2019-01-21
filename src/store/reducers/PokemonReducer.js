@@ -22,7 +22,10 @@ const PokemonReducer = (state = initialState, action) => {
     case FETCH_POKEMONS_SUCCESS:
       return {
         ...state,
-        pokemons: action.payload,
+        pokemons: action.payload.map((pokemon, index) => ({
+          ...pokemon,
+          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+        })),
         isLoading: false,
       };
     default:
