@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Colors } from 'assets';
+import { Slider } from 'components';
 import type { Statistic as Props } from 'types';
 
 const Container = styled.View`
@@ -15,21 +16,10 @@ const Text = styled.Text`
   color: ${Colors.GrayDarker};
 `;
 
-const Slider = styled.Slider`
-  width: 80%;
-`;
-
 const Statistic = ({ name, value }: Props) => (
   <Container>
     <Text>{name}</Text>
-    <Slider
-      minimumTrackTintColor="#217cd3"
-      maximumTrackTintColor="#00b0ff"
-      maximumValue={100}
-      value={value}
-      step={1}
-      disabled
-    />
+    <Slider value={value} />
   </Container>
 );
 
