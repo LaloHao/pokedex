@@ -16,11 +16,13 @@ const Container = styled.View`
 const Left = styled.View`
   background-color: ${Colors.Blue};
   height: 15px;
+  border-radius: 5px;
 `;
 
 const Right = styled.View`
   background-color: ${Colors.Gray};
   height: 15px;
+  border-radius: 5px;
 `;
 
 const Thumb = styled.View`
@@ -58,7 +60,7 @@ class Slider extends React.Component<Props, State> {
 
   onLayout = ({ nativeEvent: { layout: { width } } }) => {
     const { value } = this.props;
-    const left = width / 100 * value - 32.5;
+    const left = width / 100 * value;
     const right = width - left;
     this.setState({ left, right, width });
   }
@@ -68,7 +70,7 @@ class Slider extends React.Component<Props, State> {
     const { value } = this.props;
     if (value !== next.value) {
       const { width } = this.state;
-      const left = width / 100 * next.value - 32.5;
+      const left = width / 100 * next.value;
       const right = width - left;
       this.setState({ left, right });
     }
@@ -81,7 +83,7 @@ class Slider extends React.Component<Props, State> {
       <Container onLayout={this.onLayout}>
         <Left style={{ width: left }}/>
         <Right style={{ width: right }}/>
-        <Thumb style={{ left }}>
+        <Thumb style={{ left: left - 32.5 }}>
           <Text>{value || 0}</Text>
         </Thumb>
       </Container>
