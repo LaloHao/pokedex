@@ -45,8 +45,8 @@ const PokemonReducer = (state = initialState, action) => {
           return {
             ..._pokemon,
             ...stats,
-            weight: pokemon.weight,
-            height: pokemon.height,
+            weight: pokemon.weight / 10,
+            height: pokemon.height / 10,
             description: species.flavor_text_entries.find(s => s.language.name === 'en').flavor_text,
           };
         }
