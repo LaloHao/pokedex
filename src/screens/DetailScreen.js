@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchPokemon } from 'store/actions';
 
-import type { Navigation } from 'types';
+import type { Navigation, Pokemon } from 'types';
 
 const Container = styled.View`
   background-color: ${Colors.White};
@@ -99,18 +99,7 @@ type Props = {
   fetchPokemon: Function,
   navigation: Navigation,
   Pokemon: {
-    pokemons: Array<{
-      name: string,
-      uri: string,
-      height: string,
-      weight: string,
-      hp: string,
-      attack: string,
-      defense: string,
-      speed: string,
-      'special-attack': string,
-      'special-defense': string,
-    }>,
+    pokemons: Array<Pokemon>,
   }
 };
 
@@ -122,7 +111,7 @@ class DetailScreen extends React.Component<Props> {
 
   render() {
     const { name } = this.props.navigation.state.params;
-    const pokemon = this.props.Pokemon.pokemons.find(p => p.name === name);
+    const pokemon: any = this.props.Pokemon.pokemons.find(p => p.name === name);
     return (
       <ScrollView>
         <Container>

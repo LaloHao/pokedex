@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchPokemons } from 'store/actions';
 
-import type { Navigation } from 'types';
+import type { Navigation, Pokemon } from 'types';
 
 import { throttle } from 'lodash';
 
@@ -17,14 +17,14 @@ type Props = {
   navigation: Navigation;
   fetchPokemons: Function,
   Pokemon: {
-    pokemons: Array<{ name: string, uri: string }>,
+    pokemons: Array<Pokemon>,
     isLoading: boolean,
   },
 };
 
 type State = {
   page: number,
-  search: string,
+  search: any,
 };
 
 const styles = StyleSheet.create({
@@ -36,6 +36,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+const find = (pokemons, pokemon) => pokemons.filter(
+  // eslint-disable-next-line
+  p => p.name.toLowerCase().includes(pokemon.toLowerCase()) || p.id == pokemon,
+);
 
 class HomeScreen extends React.Component<Props, State> {
   constructor(props) {
@@ -57,10 +62,9 @@ class HomeScreen extends React.Component<Props, State> {
 
   onEndReached = throttle(() => {
     let { pokemons } = this.props.Pokemon;
-    const { page, search } = this.state;
-    if (search !== '') {
-      // eslint-disable-next-line
-      pokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.id == search);
+    const { page, search: pokemon } = this.state;
+    if (pokemon !== '') {
+      pokemons = find(pokemons, pokemon);
     }
     const pages = Math.ceil(pokemons.length / 50);
     if (page < pages) {
@@ -79,10 +83,9 @@ class HomeScreen extends React.Component<Props, State> {
   render() {
     const { isLoading } = this.props.Pokemon;
     let { pokemons } = this.props.Pokemon;
-    const { page, search } = this.state;
-    if (search !== '') {
-      // eslint-disable-next-line
-      pokemons = pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.id == search);
+    const { page, search: pokemon } = this.state;
+    if (pokemon !== '') {
+      pokemons = find(pokemons, pokemon);
     }
     return (
       <View style={{ flex: 1 }}>
@@ -96,7 +99,7 @@ class HomeScreen extends React.Component<Props, State> {
           data={pokemons.slice(0, 50 * page)}
           renderItem={this.renderPokemon}
           numColumns={3}
-          keyExtractor={pokemon => pokemon.name}
+          keyExtractor={_pokemon => _pokemon.name}
           onEndReachedThreshold={0.5}
           onEndReached={this.onEndReached}
         />

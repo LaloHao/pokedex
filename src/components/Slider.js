@@ -49,7 +49,7 @@ type State = {
 };
 
 class Slider extends React.Component<Props, State> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       left: 0,
@@ -58,7 +58,7 @@ class Slider extends React.Component<Props, State> {
     };
   }
 
-  onLayout = ({ nativeEvent: { layout: { width } } }) => {
+  onLayout = ({ nativeEvent: { layout: { width } } }: any) => {
     const { value } = this.props;
     const left = width / 100 * value;
     const right = width - left;
@@ -66,7 +66,7 @@ class Slider extends React.Component<Props, State> {
   }
 
   // eslint-disable-next-line
-  UNSAFE_componentWillReceiveProps(next) {
+  UNSAFE_componentWillReceiveProps(next: any) {
     const { value } = this.props;
     if (value !== next.value) {
       const { width } = this.state;

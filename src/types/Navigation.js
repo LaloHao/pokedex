@@ -4,5 +4,8 @@ export type Navigation = {
   goBack: Function,
   state: {
     routeName: String,
+    params: {
+      name: String,
+    },
   },
 };

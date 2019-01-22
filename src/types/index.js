@@ -6,3 +6,4 @@ export * from './Header';
 export * from './Card';
 export * from './Statistic';
 export * from './Slider';
+export * from './Pokemon';
