@@ -1,0 +1,91 @@
+* Pokedex
+  Follow the [[https://facebook.github.io/react-native/docs/getting-started][official react native guide]] section =Building Projects with Native
+  Code=.
+
+** Running on android:
+  #+BEGIN_SRC bash
+    react-native run-android
+  #+END_SRC
+  
+** Running on iOS 
+  Running on iOS requires OSX with XCode build tools, you can either run it from
+  XCode on a real device by connecting and pairing, or locally on a simulation
+  from the cli:
+  #+BEGIN_SRC bash
+    react-native run-ios
+  #+END_SRC
+  
+** Lint and typechecking
+   Project uses flow types and semi-custom eslint config, you can check them
+   both by running respectively:
+
+  #+BEGIN_SRC bash
+    npm run flow
+  #+END_SRC
+  
+  #+BEGIN_SRC bash
+    npm run lint
+  #+END_SRC
+   
+** Folder structure
+*** Assets
+    Color pallete and images should be located in the =assets= directory:
+    #+BEGIN_SRC bash
+    assets
+    |-- Colors.js
+    |-- Images
+    |   |-- index.js
+    |   `-- logo-pokemon.png
+    `-- index.js
+    #+END_SRC
+ 
+*** Source code
+    Root =index.js= (outside =src= directory) implements offline data with redux
+    persist and loads router.
+
+    Router is implemented in =App.js=, each route is a =screen= (container) and
+    they are stored in =screens= folders.
+
+    =Screens= load bare =components= from their own directory.
+
+    =Screens= load their data from the redux =store=, the data is fetched using
+    =rxjs= (observables) AKA =epics=.
+  #+BEGIN_SRC bash
+    src
+    |-- App.js
+    |-- components
+    |   |-- Card.js
+    |   |-- Header.js
+    |   |-- SearchBox.js
+    |   |-- Slider.js
+    |   |-- Statistic.js
+    |   `-- index.js
+    |-- compose
+    |   |-- index.js
+    |   `-- withHeader.js
+    |-- screens
+    |   |-- DetailScreen.js
+    |   |-- HomeScreen.js
+    |   `-- index.js
+    |-- store
+    |   |-- actions
+    |   |   |-- PokemonActions.js
+    |   |   `-- index.js
+    |   |-- epics
+    |   |   |-- PokemonEpics.js
+    |   |   `-- index.js
+    |   |-- index.js
+    |   `-- reducers
+    |       |-- PokemonReducer.js
+    |       `-- index.js
+    `-- types
+        |-- Card.js
+        |-- Header.js
+        |-- Navigation.js
+        |-- Pokemon.js
+        |-- SearchBox.js
+        |-- Slider.js
+        |-- Statistic.js
+        `-- index.js
+  #+END_SRC
+  
