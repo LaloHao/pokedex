@@ -9,7 +9,7 @@
   
 ** Running on iOS 
   Running on iOS requires OSX with XCode build tools, you can either run it from
-  XCode on a real device by connecting and pairing, or locally on a simulation
+  XCode on a real device by connecting and pairing, or locally on a simulator
   from the cli:
   #+BEGIN_SRC bash
     react-native run-ios
