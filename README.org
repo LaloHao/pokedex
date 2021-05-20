@@ -1,0 +1,92 @@
+#+TITLE:  Pokedex
+
+* About
+This file is a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] file using Emacs org-mode, all code here has been written and executed from the editor, no bits were damaged in the process.
+
+* Building (the easy way)
+Open =android= folder using =android studio= and /click/ *Run on emulator* or connect an android device.
+* Building (the hard way)
+On a terminal with [[https://github.com/NixOS/nixpkgs][nix]] installed
+#+begin_src shell :exports both :results code :wrap EXPORT shell
+nix-shell --run "(cd android; ./gradlew assembleDebug)"
+#+end_src
+
+#+RESULTS:
+#+begin_EXPORT shell
+
+> Configure project :app
+WARNING: The option setting 'android.aapt2FromMavenOverride=/nix/store/g39zr0rfz8s1cxfwz8gj3r7zzgxb5yk3-androidsdk/libexec/android-sdk/build-tools/30.0.3/aapt2' is experimental.
+
+> Task :app:generatePackageList
+> Task :app:preBuild
+> Task :app:preDebugBuild
+> Task :app:compileDebugAidl NO-SOURCE
+> Task :app:compileDebugRenderscript NO-SOURCE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:bundleDebugJsAndAssets SKIPPED
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:copyDebugBundledJs SKIPPED
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:compileDebugSources UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:processDebugJavaRes NO-SOURCE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+
+BUILD SUCCESSFUL in 1s
+28 actionable tasks: 1 executed, 27 up-to-date
+#+end_EXPORT
+
+
+Then you can install debug version on a connected device with:
+#+begin_src shell :exports both :results code :wrap EXPORT shell
+adb install ./android/app/build/outputs/apk/debug/app-debug.apk
+#+end_src
+
+#+RESULTS:
+#+begin_EXPORT shell
+Performing Streamed Install
+Success
+#+end_EXPORT
+
+Now you can run it:
+#+begin_src shell :exports both :results code :wrap EXPORT shell
+adb shell am start -a android.intent.action.MAIN -n com.pokedex/.MainActivity
+#+end_src
+
+#+RESULTS:
+#+begin_EXPORT shell
+Starting: Intent { act=android.intent.action.MAIN cmp=com.pokedex/.MainActivity }
+#+end_EXPORT
+
+Make sure, you've setup the ip and port for your development computer if you are running a real android device, otherwise you are going to the stopped by an error:
+
+[[file:docs/images/185802490_313719033578617_1239877564794096269_n.jpg]]
+
+[[file:docs/images/186491628_521513945872464_4203530112750883986_n.jpg]]
